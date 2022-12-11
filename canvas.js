@@ -138,10 +138,13 @@ function animate() {
 
 window.addEventListener("resize", function() {
 
+    this.location.reload();
+    /*
     screenHeight = window.innerHeight;
     screenWidth = window.innerWidth;
     canvas.height = screenHeight;
     canvas.width = screenWidth;
+    */
 });
 
 
