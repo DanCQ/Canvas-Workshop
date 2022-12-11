@@ -157,5 +157,5 @@ window.onload = function() {
 
     animate();
 
-    creator(15);
+    creator(10);
 };
