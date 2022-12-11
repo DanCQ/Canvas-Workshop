@@ -145,13 +145,13 @@ function animate() {
 }
 
 
-window.addEventListener("mousemove", function(event) {
+canvas.addEventListener("mousemove", function(event) {
 
     mouse.x = event.x;
     mouse.y = event.y;
 });
 
-window.addEventListener("click", function(event) {
+canvas.addEventListener("click", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
 });
