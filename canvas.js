@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
-let screenHeight = document.documentElement.scrollHeight;
-let screenWidth = document.documentElement.scrollWidth;
+let screenHeight = window.innerHeight;
+let screenWidth = window.innerWidth;
 
 canvas.height = screenHeight;
 canvas.width = screenWidth;
@@ -137,8 +137,9 @@ function animate() {
 
 
 window.addEventListener("resize", function() {
-    screenHeight = document.documentElement.scrollHeight;
-    screenWidth = document.documentElement.scrollWidth;
+
+    screenHeight = window.innerHeight;
+    screenWidth = window.innerWidth;
     canvas.height = screenHeight;
     canvas.width = screenWidth;
 });
