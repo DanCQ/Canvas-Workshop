@@ -1,0 +1,10 @@
+body {
+    background-color: black;
+    margin:0;
+}
+
+canvas {
+    background-color: black;
+    min-height:100vh;
+    min-width:100vw;
+}
