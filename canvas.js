@@ -1,10 +1,16 @@
 const canvas = document.getElementById("canvas");
+
 let screenHeight = window.innerHeight
 let screenWidth = window.innerWidth;
-
 canvas.height = screenHeight;
 canvas.width = screenWidth;
 c = canvas.getContext("2d");
+
+let circArr = [];
+let mouse = {
+    x: undefined,
+    y: undefined
+}
 
 //141 colors. The minimum is 0, the maximum is 140
 const colorArray = [
@@ -63,30 +69,6 @@ c.stroke();
 */
 
 
-let circArr = [];
-
-//select a number to create
-function creator(num) {
-
-    let circle, color, dx, dy, invert, radius, x, y;
-    
-    for(let i = 0; i < num; i++) {
-        
-        color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        invert = [-1,1]; //reverses directions
-        dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(10,100); //random circle radius
-        x = randomRange(radius, screenWidth - radius); //choose location
-        y = randomRange(radius, screenHeight - radius); //choose location
-
-        circle = new Circle(x,y,dx,dy,radius,color); //circles will have different properties
-
-        circArr.push(circle); //sends to array
-    }
-}
-
-
 //object
 function Circle(x,y,dx,dy,radius,color) {
     this.x = x;
@@ -114,10 +96,40 @@ function Circle(x,y,dx,dy,radius,color) {
             this.dy = -this.dy;
         }
 
+        //interactivity
+        if(mouse.x - this.radius < 10) {
+            this.dx = -this.dx;
+        }
+        if(mouse.y - this.radius < 10) {
+            this.dy = -this.dy;
+        }
+
         this.draw();
     
         this.x += this.dx;
         this.y += this.dy;
+    }
+}
+
+
+//select a number to create
+function creator(num) {
+
+    let circle, color, dx, dy, invert, radius, x, y;
+    
+    for(let i = 0; i < num; i++) {
+        
+        color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
+        invert = [-1,1]; //reverses directions
+        dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
+        radius = randomRange(10,100); //random circle radius
+        x = randomRange(radius, screenWidth - radius); //choose location
+        y = randomRange(radius, screenHeight - radius); //choose location
+
+        circle = new Circle(x,y,dx,dy,radius,color); //circles will have different properties
+
+        circArr.push(circle); //sends to array
     }
 }
 
@@ -133,16 +145,27 @@ function animate() {
 }
 
 
+window.addEventListener("mousemove", function(event) {
+
+    mouse.x = event.x;
+    mouse.y = event.y;
+});
+
+window.addEventListener("click", function(event) {
+    mouse.x = event.x;
+    mouse.y = event.y;
+});
+
+
 setTimeout(function() {
     window.addEventListener("resize", function() {
 
-        location.reload();
-        /*
+        //location.reload();
+        
         screenHeight = window.innerHeight;
         screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
-        */
     });
 
 },50);
