@@ -41,25 +41,53 @@ function randomRange(min,max) {
 }
 
 
+/*
+
+//rectangles
+c.fillStyle = "rgba(255, 0, 0, 0.6)";
+c.fillRect(150,140,100,100);
+c.fillStyle = "rgba(0, 255, 0, 0.25)";
+c.fillRect(250,240,100,100);
+c.fillStyle = "rgba(0, 0, 255, 0.6)";
+c.fillRect(350,140,100,100);
+
+//lines
+c.beginPath();
+c.strokeStyle = "ivory";
+c.moveTo(100,125);
+c.lineTo(100,300);
+c.lineTo(200,400);
+c.lineTo(400,400);
+c.lineTo(500,300);
+c.lineTo(500,125);
+c.lineTo(400,40);
+c.lineTo(200,40);
+c.lineTo(100,125);
+c.stroke();
+
+*/
+
+
 let circArr = [];
 
+//select a number to create
 function creator(num) {
 
     let circle, color, dx, dy, invert, radius, x, y;
     
     for(let i = 0; i < num; i++) {
         
-        color = colorArray[randomRange( 0, colorArray.length - 1)];
+        color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
         invert = [-1,1]; //reverses directions
-        dx = randomRange(1,10) * invert[randomRange(0,1)];
-        dy = randomRange(1,10) * invert[randomRange(0,1)];
-        radius = randomRange(10,100);
-        x = randomRange(radius, screenWidth - radius);
-        y = randomRange(radius, screenHeight - radius);
+        dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
+        radius = randomRange(10,100); //random circle radius
+        x = randomRange(radius, screenWidth - radius); //choose location
+        y = randomRange(radius, screenHeight - radius); //choose location
 
-        circle = new Circle(x,y,dx,dy,radius,color);
+        circle = new Circle(x,y,dx,dy,radius,color); //circles will have different properties
 
-        circArr.push(circle);
+        circArr.push(circle); //sends to array
     }
 }
 
@@ -99,41 +127,14 @@ function Circle(x,y,dx,dy,radius,color) {
 
 function animate() {
 
-    requestAnimationFrame(animate);
-    c.clearRect(0,0,screenWidth,screenHeight);
+    requestAnimationFrame(animate); //loop
+    c.clearRect(0,0,screenWidth,screenHeight); //clears screen
 
     for(let i = 0; i < circArr.length; i ++) {
-        circArr[i].update();
+        circArr[i].update(); //updates frame
     }
 }
 
-
-/*
-
-//rectangles
-c.fillStyle = "rgba(255, 0, 0, 0.6)";
-c.fillRect(150,140,100,100);
-c.fillStyle = "rgba(0, 255, 0, 0.25)";
-c.fillRect(250,240,100,100);
-c.fillStyle = "rgba(0, 0, 255, 0.6)";
-c.fillRect(350,140,100,100);
-
-//lines
-c.beginPath();
-c.strokeStyle = "ivory";
-c.moveTo(100,125);
-c.lineTo(100,300);
-c.lineTo(200,400);
-c.lineTo(400,400);
-c.lineTo(500,300);
-c.lineTo(500,125);
-c.lineTo(400,40);
-c.lineTo(200,40);
-c.lineTo(100,125);
-c.stroke();
-
-
-*/
 
 window.addEventListener("resize", function() {
     screenHeight = document.documentElement.scrollHeight;
@@ -146,5 +147,6 @@ window.addEventListener("resize", function() {
 window.onload = function() {
 
     animate();
-    creator(10);
+
+    creator(25);
 };
