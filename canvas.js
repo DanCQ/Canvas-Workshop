@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
-let screenHeight = window.innerHeight;
-let screenWidth = window.innerWidth;
+let screenHeight = document.documentElement.scrollHeight;
+let screenWidth = document.documentElement.scrollWidth;
 
 canvas.height = screenHeight;
 canvas.width = screenWidth;
