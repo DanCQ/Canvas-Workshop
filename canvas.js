@@ -139,8 +139,8 @@ function animate() {
 setTimeout(function() {
 
     window.addEventListener("resize", function() {
-        screenHeight = window.innerHeight;
-        screenWidth = window.innerWidth;
+        screenHeight = document.documentElement.scrollHeight;
+        screenWidth = document.documentElement.scrollWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
     });
@@ -151,5 +151,5 @@ window.onload = function() {
 
     animate();
 
-    creator(15);
+    creator(10);
 };
