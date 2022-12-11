@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
-let screenHeight = document.documentElement.scrollHeight;
-let screenWidth = document.documentElement.scrollWidth;
+let screenHeight = window.innerHeight
+let screenWidth = window.innerWidth;
 
 canvas.height = screenHeight;
 canvas.width = screenWidth;
@@ -107,6 +107,8 @@ function Circle(x,y,dx,dy,radius,color) {
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.strokeStyle = `${this.color}`;
         c.stroke();
+        c.fillStyle = `${this.color}`;
+        c.fill();
     }
 
     this.update = ()=> {
@@ -137,13 +139,13 @@ function animate() {
 
 
 setTimeout(function() {
-
     window.addEventListener("resize", function() {
-        screenHeight = document.documentElement.scrollHeight;
-        screenWidth = document.documentElement.scrollWidth;
+        screenHeight = window.innerHeight;
+        screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
     });
+
 },50);
 
 
