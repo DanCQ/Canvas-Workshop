@@ -83,7 +83,7 @@ function Circle(x,y,dx,dy,radius,color) {
         //circles
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.strokeStyle = "black"; // `${this.color}`;
+        c.strokeStyle = "black";
         c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
@@ -121,7 +121,7 @@ function Circle(x,y,dx,dy,radius,color) {
 
 
 //select a number to create
-function creator(num) {
+function multiCircleCreator(num) {
 
     let circle, color, dx, dy, radius, x, y;
     
@@ -183,14 +183,14 @@ setTimeout(function() {
         canvas.width = screenWidth;
 
         circArr = [];
-        creator(randomRange(6,10));
+        multiCircleCreator(randomRange(6,10));
     });
 },50);
 
 
 window.onload = function() {
 
-    creator(randomRange(6,10));
+    multiCircleCreator(randomRange(6,10));
     
     animate();
 };
