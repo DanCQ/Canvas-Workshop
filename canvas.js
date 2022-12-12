@@ -172,5 +172,5 @@ window.onload = function() {
 
     animate();
 
-    creator(8);
+    creator(7);
 };
