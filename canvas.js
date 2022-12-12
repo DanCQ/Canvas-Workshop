@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 
-let screenHeight = window.innerHeight
+let screenHeight = window.innerHeight;
 let screenWidth = window.innerWidth;
 canvas.height = screenHeight;
 canvas.width = screenWidth;
@@ -158,14 +158,11 @@ canvas.addEventListener("click", function(event) {
 
 setTimeout(function() {
     window.addEventListener("resize", function() {
-
-        location.reload();
-        /*
-        screenHeight = window.innerHeight;
-        screenWidth = window.innerWidth;
+     
+        screenHeight =  window.innerHeight;
+        screenWidth =  window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
-        */
     });
 },50);
 
