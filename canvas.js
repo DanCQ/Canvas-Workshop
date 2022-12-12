@@ -7,6 +7,7 @@ canvas.width = screenWidth;
 c = canvas.getContext("2d");
 
 let circArr = [];
+let invert = [-1,1]; //reverses directions
 let mouse = {
     x: undefined,
     y: undefined
@@ -98,8 +99,10 @@ function Circle(x,y,dx,dy,radius,color) {
 
         //interactivity
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
-            this.dx = -this.dx;
-            this.dy = -this.dy;
+            this.dx = -this.dx + Math.random() * randomRange(-3,3);
+            this.dy = -this.dy + Math.random() * randomRange(-3,3);
+            this.x += randomRange(-5,5);
+            this.y += randomRange(-5,5);
         } 
 
         this.draw();
@@ -113,12 +116,11 @@ function Circle(x,y,dx,dy,radius,color) {
 //select a number to create
 function creator(num) {
 
-    let circle, color, dx, dy, invert, radius, x, y;
+    let circle, color, dx, dy, radius, x, y;
     
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        invert = [-1,1]; //reverses directions
         dx = randomRange(1,9) * invert[randomRange(0,1)]; //random direction x-axis
         dy = randomRange(1,9) * invert[randomRange(0,1)]; //random direction y-axis
         radius = randomRange(10,70); //random circle radius
@@ -172,5 +174,5 @@ window.onload = function() {
 
     animate();
 
-    creator(7);
+    creator(randomRange(6,10));
 };
