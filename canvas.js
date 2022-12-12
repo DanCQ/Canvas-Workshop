@@ -105,10 +105,10 @@ function Circle(x,y,dx,dy,radius,color) {
             this.y += randomRange(-5,5);
         } 
 
-        if(this.dx > 9) {
+        if(this.dx > 8) {
             this.dx -= 0.1;
         }
-        if(this.dy > 9) {
+        if(this.dy > 8) {
             this.dy -=0.1;
         }
 
@@ -128,8 +128,8 @@ function creator(num) {
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        dx = randomRange(1,20) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,20) * invert[randomRange(0,1)]; //random direction y-axis
+        dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
         radius = randomRange(10,70); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
@@ -177,8 +177,8 @@ canvas.addEventListener("mousemove", function(event) {
 setTimeout(function() {
     window.addEventListener("resize", function() {
      
-        screenHeight =  window.innerHeight;
-        screenWidth =  window.innerWidth;
+        screenHeight = window.innerHeight;
+        screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
     });
