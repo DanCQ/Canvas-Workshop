@@ -4,3 +4,5 @@
 
 A test site for HTML5 Canvas animations
 
+The circles respond to approximite clicks on the screen.
+
