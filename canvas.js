@@ -99,11 +99,18 @@ function Circle(x,y,dx,dy,radius,color) {
 
         //interactivity
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
-            this.dx = -this.dx + Math.random() * randomRange(-3,3);
-            this.dy = -this.dy + Math.random() * randomRange(-3,3);
+            this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-3,3);
+            this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-3,3);
             this.x += randomRange(-5,5);
             this.y += randomRange(-5,5);
         } 
+
+        if(this.dx > 9) {
+            this.dx -= 0.1;
+        }
+        if(this.dy > 9) {
+            this.dy -=0.1;
+        }
 
         this.draw();
     
@@ -121,8 +128,8 @@ function creator(num) {
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        dx = randomRange(1,9) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,9) * invert[randomRange(0,1)]; //random direction y-axis
+        dx = randomRange(1,20) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,20) * invert[randomRange(0,1)]; //random direction y-axis
         radius = randomRange(10,70); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
@@ -153,6 +160,17 @@ canvas.addEventListener("click", function(event) {
         mouse.x = undefined;
         mouse.y = undefined;
     },150);
+});
+
+
+canvas.addEventListener("mousemove", function(event) {
+    mouse.x = event.x;
+    mouse.y = event.y;
+
+    setTimeout(function() {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    },10);
 });
 
 
