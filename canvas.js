@@ -121,7 +121,7 @@ function creator(num) {
         invert = [-1,1]; //reverses directions
         dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
         dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(10,100); //random circle radius
+        radius = randomRange(10,50); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
 
