@@ -97,12 +97,10 @@ function Circle(x,y,dx,dy,radius,color) {
         }
 
         //interactivity
-        if(mouse.x - this.radius < 10) {
+        if(mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
             this.dx = -this.dx;
-        }
-        if(mouse.y - this.radius < 10) {
             this.dy = -this.dy;
-        }
+        } 
 
         this.draw();
     
@@ -145,15 +143,14 @@ function animate() {
 }
 
 
-canvas.addEventListener("mousemove", function(event) {
-
-    mouse.x = event.x;
-    mouse.y = event.y;
-});
-
 canvas.addEventListener("click", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
+
+    setTimeout(function() {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    },600);
 });
 
 
@@ -168,7 +165,6 @@ setTimeout(function() {
         canvas.width = screenWidth;
         */
     });
-
 },50);
 
 
