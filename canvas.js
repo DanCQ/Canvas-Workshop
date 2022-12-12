@@ -150,7 +150,7 @@ canvas.addEventListener("click", function(event) {
     setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },600);
+    },500);
 });
 
 
