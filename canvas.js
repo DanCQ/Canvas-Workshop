@@ -97,7 +97,7 @@ function Circle(x,y,dx,dy,radius,color) {
         }
 
         //interactivity
-        if(mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+        if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
             this.dx = -this.dx;
             this.dy = -this.dy;
         } 
@@ -121,7 +121,7 @@ function creator(num) {
         invert = [-1,1]; //reverses directions
         dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
         dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(10,70); //random circle radius
+        radius = randomRange(10,75); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
 
