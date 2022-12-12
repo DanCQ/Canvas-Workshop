@@ -119,9 +119,9 @@ function creator(num) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
         invert = [-1,1]; //reverses directions
-        dx = randomRange(1,10) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,10) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(10,50); //random circle radius
+        dx = randomRange(1,8) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,8) * invert[randomRange(0,1)]; //random direction y-axis
+        radius = randomRange(10,75); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
 
