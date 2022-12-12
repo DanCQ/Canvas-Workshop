@@ -176,11 +176,14 @@ canvas.addEventListener("mousemove", function(event) {
 
 setTimeout(function() {
     window.addEventListener("resize", function() {
-     
+
+        location.reload();
+        /*
         screenHeight = window.innerHeight;
         screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
+        */
     });
 },50);
 
