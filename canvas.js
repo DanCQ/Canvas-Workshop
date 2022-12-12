@@ -83,7 +83,7 @@ function Circle(x,y,dx,dy,radius,color) {
         //circles
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.strokeStyle = `${this.color}`;
+        c.strokeStyle = "black"; // `${this.color}`;
         c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
