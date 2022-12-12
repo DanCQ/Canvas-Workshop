@@ -11,7 +11,7 @@ let invert = [-1,1]; //reverses directions
 let mouse = {
     x: undefined,
     y: undefined
-}
+};
 
 //141 colors. The minimum is 0, the maximum is 140
 const colorArray = [
@@ -177,20 +177,20 @@ canvas.addEventListener("mousemove", function(event) {
 setTimeout(function() {
     window.addEventListener("resize", function() {
 
-        location.reload();
-        /*
         screenHeight = window.innerHeight;
         screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
-        */
+
+        circArr = [];
+        creator(randomRange(6,10));
     });
 },50);
 
 
 window.onload = function() {
 
-    animate();
-
     creator(randomRange(6,10));
+    
+    animate();
 };
