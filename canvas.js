@@ -79,7 +79,7 @@ function Circle(x,y,dx,dy,radius,color) {
     this.color = color;
     this.radius = radius;
     this.gravity = 1;
-    this.frictionY = 0.94;
+    this.frictionY = 0.9;
     this.frictionX = 0.8;
 
     this.draw = ()=> {
