@@ -79,7 +79,7 @@ function Circle(x,y,dx,dy,radius,color) {
     this.color = color;
     this.radius = radius;
     this.gravity = 1;
-    this.frictionY = 0.9;
+    this.frictionY = 0.95;
     this.frictionX = 0.8;
 
     this.draw = ()=> {
@@ -100,7 +100,7 @@ function Circle(x,y,dx,dy,radius,color) {
             }
             //sets ceiling & floor boundaries
             if(this.y + this.radius + this.dy >= screenHeight || this.y + this.dy <= this.radius) {
-                this.dy = -this.dy * this.frictionY; //slows upward movement on floor bounce
+                this.dy = -this.dy * this.frictionY;  //slows upward movement on floor bounce
             } else {
                 this.dy += this.gravity; //gravity
             }
@@ -118,9 +118,9 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.x += 0.5; 
             }
             //reduces rolling speed to a stop
-            if(this.dx > -3.5 && this.dx < 0) {
+            if(this.dx > -4 && this.dx < 0) {
                 this.dx += (0.01 * 100) / 100; 
-            } else if (this.dx < 3.5 && this.dx > 0) {
+            } else if (this.dx < 4 && this.dx > 0) {
                 this.dx -= (0.01 * 100) / 100;
             }
         
