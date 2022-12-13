@@ -151,9 +151,9 @@ function multiCircleCreator(num) {
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        dx = randomRange(1,20) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,20) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(10,70); //random circle radius
+        dx = randomRange(1,25) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,25) * invert[randomRange(0,1)]; //random direction y-axis
+        radius = randomRange(5,75); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
 
@@ -205,7 +205,7 @@ setTimeout(function() {
         canvas.width = screenWidth;
 
         circArr = [];
-        multiCircleCreator(randomRange(6,10));
+        multiCircleCreator(randomRange(10,50));
     });
 },50);
 
