@@ -94,10 +94,12 @@ function Circle(x,y,dx,dy,radius,color) {
 
     this.update = ()=> {
 
-            if(this.x + this.radius >= screenWidth || this.x <= this.radius) {
+            //sets left & right boundaries
+            if(this.x + this.radius + this.dx >= screenWidth || this.x + this.dx <= this.radius) {
                 this.dx = -this.dx * this.frictionX; //slows side movement on sides bounce
             }
-            if(this.y + this.radius >= screenHeight || this.y <= this.radius) {
+            //sets ceiling & floor boundaries
+            if(this.y + this.radius + this.dy >= screenHeight || this.y + this.dy <= this.radius) {
                 this.dy = -this.dy * this.frictionY; //slows upward movement on floor bounce
             } else {
                 this.dy += this.gravity; //gravity
@@ -107,7 +109,7 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.y += 5; 
             }
             if(this.y + this.radius >= screenHeight) {  //unstick items from floor
-                this.y -= 0.02; 
+                this.y -= 0.01; 
             }
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
                 this.x -= 0.5; 
