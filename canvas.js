@@ -121,7 +121,7 @@ function Circle(x,y,dx,dy,radius,color) {
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
             
             this.x += randomRange(-randomRange(5,10),randomRange(5,10)); 
-            this.y += -randomRange(1,5) * 2;
+            this.y += -randomRange(1,6) * 2;
 
             this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-3,3);
             this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-3,3);
