@@ -78,6 +78,9 @@ function Circle(x,y,dx,dy,radius,color) {
     this.dy = dy;
     this.color = color;
     this.radius = radius;
+    this.gravity = 1;
+    this.frictionY = 0.96;
+    this.frictionX = 0.5;
 
     this.draw = ()=> {
         //circles
@@ -91,25 +94,37 @@ function Circle(x,y,dx,dy,radius,color) {
 
     this.update = ()=> {
 
-            if(this.x + this.radius > screenWidth || this.x < this.radius) {
-                this.dx = -this.dx;
+            if(this.x + this.radius >= screenWidth || this.x <= this.radius) {
+                this.dx = -this.dx * this.frictionX; //slows side movement
             }
-            if(this.y + this.radius > screenHeight || this.y < this.radius) {
-                this.dy = -this.dy;
+            if(this.y + this.radius >= screenHeight || this.y <= this.radius) {
+                this.dy = -this.dy * this.frictionY; //slows upward movement
             } else {
-                this.dy += 1; //gravity
+                this.dy += this.gravity; //gravity
             }
-        
+            
+            if(this.y + this.radius <= screenHeight) {  //unstick items from ceiling
+                this.y += 0.2;
+            }
+            if(this.y + this.radius >= screenHeight) {  //unstick items from floor
+                this.y -= 0.2;
+            }
+            if(this.x + this.radius >= screenWidth) {   //unstick items from right
+                this.x -= 0.2;
+            } else if(this.x + this.radius <= screenWidth) {    //unstick items from left
+                this.x += 0.2;
+            }
         
 
         //interactivity
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
+            
+            this.x += randomRange(-randomRange(5,10),randomRange(5,10)); 
+            this.y += -randomRange(1,5) * 2;
+
             this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-3,3);
             this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-3,3);
-            this.x += randomRange(-5,5);
-            this.y += randomRange(-5,5);
         } 
-
 
         this.draw();
     
