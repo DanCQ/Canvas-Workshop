@@ -153,7 +153,7 @@ function multiCircleCreator(num) {
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
         dx = randomRange(1,25) * invert[randomRange(0,1)]; //random direction x-axis
         dy = randomRange(1,25) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(5,70); //random circle radius
+        radius = randomRange(5,65); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
 
