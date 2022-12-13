@@ -80,7 +80,7 @@ function Circle(x,y,dx,dy,radius,color) {
     this.radius = radius;
     this.gravity = 1;
     this.frictionY = 0.95;
-    this.frictionX = 0.5;
+    this.frictionX = 0.8;
 
     this.draw = ()=> {
         //circles
@@ -95,41 +95,47 @@ function Circle(x,y,dx,dy,radius,color) {
     this.update = ()=> {
 
             if(this.x + this.radius >= screenWidth || this.x <= this.radius) {
-                this.dx = -this.dx * this.frictionX; //slows side movement
+                this.dx = -this.dx * this.frictionX; //slows side movement on sides bounce
             }
             if(this.y + this.radius >= screenHeight || this.y <= this.radius) {
-                this.dy = -this.dy * this.frictionY; //slows upward movement
+                this.dy = -this.dy * this.frictionY; //slows upward movement on floor bounce
             } else {
                 this.dy += this.gravity; //gravity
             }
 
             if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
-                this.y += 0.5;
+                this.y += 0.5; 
             }
             if(this.y + this.radius >= screenHeight) {  //unstick items from floor
-                this.y -= 0.02;
+                this.y -= 0.02; 
             }
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
-                this.x -= 0.2;
+                this.x -= 0.5; 
             }
             if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
-                this.x += 0.2;
+                this.x += 0.5; 
+            }
+            //reduces rolling speed to a stop
+            if(this.dx > -3.5 && this.dx < 0) {
+                this.dx += (0.01 * 100) / 100; 
+            } else if (this.dx < 3.5 && this.dx > 0) {
+                this.dx -= (0.01 * 100) / 100;
             }
         
 
         //interactivity
-        if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
+        if(mouse.x - this.x < 100 && mouse.x - this.x > -100 && mouse.y - this.y < 100 && mouse.y - this.y > -100) {
             
-            this.x += randomRange(-randomRange(5,10),randomRange(5,10)); 
-            this.y += -randomRange(1,6) * 2;
+            this.x += randomRange(-5,5); 
+            this.y += -randomRange(1,10) * 2;
 
-            this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-3,3);
-            this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-3,3);
+            this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-5,5);
+            this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-5,5);
         } 
 
         this.draw();
     
-        this.x += this.dx;
+        this.x += this.dx; 
         this.y += this.dy;
     }
 }
@@ -174,7 +180,7 @@ canvas.addEventListener("click", function(event) {
     setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },150);
+    },100);
 });
 
 
@@ -185,7 +191,7 @@ canvas.addEventListener("mousemove", function(event) {
     setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },10);
+    },25);
 });
 
 
