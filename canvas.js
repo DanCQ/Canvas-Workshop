@@ -119,9 +119,9 @@ function Circle(x,y,dx,dy,radius,color) {
             }
             //reduces rolling speed to a stop
             if(this.dx > -4 && this.dx < 0) {
-                this.dx += (0.01 * 100) / 100; 
+                this.dx += 0.01;
             } else if (this.dx < 4 && this.dx > 0) {
-                this.dx -= (0.01 * 100) / 100;
+                this.dx -= 0.01;
             }
         
 
