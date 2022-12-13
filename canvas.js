@@ -104,7 +104,7 @@ function Circle(x,y,dx,dy,radius,color) {
             }
 
             if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
-                this.y += 0.5; 
+                this.y += 5; 
             }
             if(this.y + this.radius >= screenHeight) {  //unstick items from floor
                 this.y -= 0.02; 
@@ -210,7 +210,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    multiCircleCreator(randomRange(6,10));
+    multiCircleCreator(randomRange(10,50));
     
     animate();
 };
