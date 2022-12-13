@@ -90,12 +90,17 @@ function Circle(x,y,dx,dy,radius,color) {
     }
 
     this.update = ()=> {
-        if(this.x + this.radius > screenWidth || this.x < this.radius) {
-            this.dx = -this.dx;
-        }
-        if(this.y + this.radius > screenHeight || this.y < this.radius) {
-            this.dy = -this.dy;
-        }
+
+            if(this.x + this.radius > screenWidth || this.x < this.radius) {
+                this.dx = -this.dx;
+            }
+            if(this.y + this.radius > screenHeight || this.y < this.radius) {
+                this.dy = -this.dy;
+            } else {
+                this.dy += 1; //gravity
+            }
+        
+        
 
         //interactivity
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
@@ -105,12 +110,6 @@ function Circle(x,y,dx,dy,radius,color) {
             this.y += randomRange(-5,5);
         } 
 
-        if(this.dx > 8) {
-            this.dx -= 0.1;
-        }
-        if(this.dy > 8) {
-            this.dy -=0.1;
-        }
 
         this.draw();
     
@@ -176,7 +175,6 @@ canvas.addEventListener("mousemove", function(event) {
 
 setTimeout(function() {
     window.addEventListener("resize", function() {
-
         screenHeight = window.innerHeight;
         screenWidth = window.innerWidth;
         canvas.height = screenHeight;
