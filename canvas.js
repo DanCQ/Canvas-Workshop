@@ -1,4 +1,5 @@
 const canvas = document.getElementById("canvas");
+const portfolio = document.querySelector(".portfolio");
 
 let screenHeight = window.innerHeight;
 let screenWidth = window.innerWidth;
@@ -178,6 +179,8 @@ function animate() {
 canvas.addEventListener("click", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
+
+    portfolio.style.visibility == "visible" ? portfolio.style.visibility = "hidden" : portfolio.style.visibility = "visible";
 
     setTimeout(function() {
         mouse.x = undefined;
