@@ -1,6 +1,6 @@
 # Canvas-Workshop
 
-A test site for HTML5 Canvas animations.
+A test site for HTML5 Canvas animations and simulated physics.
 
 <a href="https://canvas-workshop.pages.dev/">Canvas Workshop</a>
 
