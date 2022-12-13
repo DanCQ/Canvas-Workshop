@@ -79,7 +79,7 @@ function Circle(x,y,dx,dy,radius,color) {
     this.color = color;
     this.radius = radius;
     this.gravity = 1;
-    this.frictionY = 0.98;
+    this.frictionY = 0.95;
     this.frictionX = 0.6;
 
     this.draw = ()=> {
@@ -107,13 +107,13 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.y += 0.5;
             }
             if(this.y + this.radius >= screenHeight) {  //unstick items from floor
-                this.y -= 0.1;
+                this.y -= 0.02;
             }
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
-                this.x -= 0.1;
+                this.x -= 0.5;
             }
             if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
-                this.x += 0.1;
+                this.x += 0.5;
             }
         
 
@@ -143,8 +143,8 @@ function multiCircleCreator(num) {
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        dx = randomRange(1,25) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,25) * invert[randomRange(0,1)]; //random direction y-axis
+        dx = randomRange(1,20) * invert[randomRange(0,1)]; //random direction x-axis
+        dy = randomRange(1,20) * invert[randomRange(0,1)]; //random direction y-axis
         radius = randomRange(10,70); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
