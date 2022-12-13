@@ -110,10 +110,10 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.y -= 0.02;
             }
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
-                this.x -= 0.5;
+                this.x -= 0.2;
             }
             if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
-                this.x += 0.5;
+                this.x += 0.2;
             }
         
 
