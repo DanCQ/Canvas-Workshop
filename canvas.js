@@ -205,14 +205,14 @@ setTimeout(function() {
         canvas.width = screenWidth;
 
         circArr = [];
-        multiCircleCreator(randomRange(10,50));
+        multiCircleCreator(randomRange(10,25));
     });
 },50);
 
 
 window.onload = function() {
 
-    multiCircleCreator(randomRange(10,50));
+    multiCircleCreator(randomRange(10,25));
     
     animate();
 };
