@@ -108,6 +108,7 @@ function Circle(x,y,dx,dy,radius,color) {
 
             if(this.y + this.radius <= this.radius * 2 - 5) {   //quickly unstick from ceiling
                 this.y += 25;
+                this.dx += randomRange(-2,2);  //adds slight sideways movement 
             } else if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
                 this.y += 1; 
             }
@@ -120,11 +121,13 @@ function Circle(x,y,dx,dy,radius,color) {
 
             if(this.x + this.radius >= screenWidth + 5) {   //quickly unstick from right
                 this.x -= 25;
+                this.dx += -randomRange(1,2);  //adds slight sideways movement 
             } else if(this.x + this.radius >= screenWidth) {   //unstick items from right
                 this.x -= 1; 
             }
             if(this.x + this.radius <= (this.radius * 2) - 5) {  //quickly unstick from left
                 this.x += 25;
+                this.dx += randomRange(1,2);  //adds slight sideways movement 
             } else if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
                 this.x += 1; 
             }
