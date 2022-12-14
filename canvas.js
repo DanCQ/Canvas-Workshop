@@ -215,8 +215,8 @@ setTimeout(function() {
         canvas.height = screenHeight;
         canvas.width = screenWidth;
 
-        circArr = [];
-        multiCircleCreator(randomRange(10,20));
+        //circArr = [];
+        //multiCircleCreator(randomRange(10,20));
     });
 },50);
 
