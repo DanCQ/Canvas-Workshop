@@ -216,8 +216,8 @@ setTimeout(function() {
         setTimeout(function() {
             screenHeight = window.innerHeight;
             screenWidth = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.width = window.innerWidth;
+            canvas.height = screenHeight;
+            canvas.width = screenWidth;
         },50);
     });
 }, 25); 
