@@ -106,20 +106,26 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.dy += this.gravity; //gravity
             }
 
-            if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
-                this.y += 5; 
+            if(this.y + this.radius <= this.radius * 2 - 5) {   //quickly unstick from ceiling
+                this.y += 25;
+            } else if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
+                this.y += 1; 
             }
             if(this.y + this.radius >= screenHeight + 5) {  //quickly bring up items from floor
-                this.y -= 10; 
-            } else if(this.y + this.radius >= screenHeight) {  //unstick items from floor
+                this.y -= 25; 
+            } else if(this.y + this.radius >= screenHeight) {  //prevents from sinking into floor
                 this.y -= 0.05; 
             }
 
-            if(this.x + this.radius >= screenWidth) {   //unstick items from right
-                this.x -= 0.5; 
+            if(this.x + this.radius >= screenWidth + 5) {   //quickly unstick from right
+                this.x -= 25;
+            } else if(this.x + this.radius >= screenWidth) {   //unstick items from right
+                this.x -= 1; 
             }
-            if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
-                this.x += 0.5; 
+            if(this.x + this.radius <= (this.radius * 2) - 5) {  //quickly unstick from left
+                this.x += 25;
+            } else if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
+                this.x += 1; 
             }
 
             //slowly reduces rolling speed
