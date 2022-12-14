@@ -208,14 +208,19 @@ canvas.addEventListener("mousemove", function(event) {
 });
 
 
+//prevents infite loop when loading page on mobile
 setTimeout(function() {
     window.addEventListener("resize", function() {
-        screenHeight = window.innerHeight;
-        screenWidth = window.innerWidth;
-        canvas.height = screenHeight;
-        canvas.width = screenWidth;
+        
+        //Only way found to avoid a canvas resize bug on mobile
+        setTimeout(function() {
+            screenHeight = window.innerHeight;
+            screenWidth = window.innerWidth;
+            canvas.height = screenHeight;
+            canvas.width = screenWidth;
+        }, 25);
     });
-},50);
+}, 25); 
 
 
 window.onload = function() {
