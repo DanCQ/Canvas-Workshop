@@ -81,7 +81,7 @@ function Circle(x,y,dx,dy,radius,color) {
     this.radius = radius;
     this.gravity = 0.98; 
     this.frictionY = 0.95;
-    this.frictionX = 0.8;
+    this.frictionX = 0.82;
 
     this.draw = ()=> {
         //circles
@@ -97,11 +97,11 @@ function Circle(x,y,dx,dy,radius,color) {
 
             //sets left & right boundaries
             if(this.x + this.radius + this.dx >= screenWidth || this.x + this.dx <= this.radius) {
-                this.dx = -this.dx * this.frictionX; //slows side movement on sides bounce
+                this.dx = -this.dx * this.frictionX; //reduces side movement on side bounce
             }
             //sets ceiling & floor boundaries
             if(this.y + this.radius + this.dy >= screenHeight || this.y + this.dy <= this.radius) {
-                this.dy = -this.dy * this.frictionY;  //slows upward movement on floor bounce
+                this.dy = -this.dy * this.frictionY;  //reduces upward movement on floor bounce
             } else {
                 this.dy += this.gravity; //gravity
             }
@@ -118,11 +118,19 @@ function Circle(x,y,dx,dy,radius,color) {
             if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
                 this.x += 0.5; 
             }
-            //reduces rolling speed to a stop
-            if(this.dx > -4 && this.dx < 0) {
-                this.dx += 0.01;
-            } else if (this.dx < 4 && this.dx > 0) {
-                this.dx -= 0.01;
+
+            //slowly reduces rolling speed
+            if(this.dx > -10 && this.dx < 0) {
+                this.dx += 0.005;
+            } else if (this.dx < 10 && this.dx > 0) {
+                this.dx -= 0.005;
+            } 
+
+            //slowly reduces bounce height
+            if(this.dy > -10 && this.dy < 0) {
+                this.dy += 0.005;
+            } else if (this.dy < 10 && this.dy > 0) {
+                this.dy -= 0.005;
             }
         
 
