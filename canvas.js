@@ -113,6 +113,7 @@ function Circle(x,y,dx,dy,radius,color) {
             }
             if(this.y + this.radius >= screenHeight + 5) {  //quickly bring up items from floor
                 this.y -= 25; 
+                this.dx += randomRange(-2,2);  //adds slight sideways movement 
             } else if(this.y + this.radius >= screenHeight) {  //prevents from sinking into floor
                 this.y -= 0.05; 
             }
