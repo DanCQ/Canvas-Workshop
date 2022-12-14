@@ -83,6 +83,24 @@ function Circle(x,y,dx,dy,radius,color) {
     this.frictionY = 0.95;
     this.frictionX = 0.82;
 
+    function mass() {
+        if(this.radius > 60) {
+            return 0.6;
+        } else if(this.radius > 50) {
+            return 0.5;
+        } else if(this.radius > 40) {
+            return 0.4;
+        } else if(this.radius > 30) {
+            return 0.3;
+        } else if(this.radius > 20) {
+            return 0.2;
+        } else if(this.radius > 10) {
+            return 0.1;
+        } else {
+            return 0;
+        }
+    }
+
     this.draw = ()=> {
         //circles
         c.beginPath();
@@ -103,7 +121,7 @@ function Circle(x,y,dx,dy,radius,color) {
             if(this.y + this.radius + this.dy >= screenHeight || this.y + this.dy <= this.radius) {
                 this.dy = -this.dy * this.frictionY;  //reduces upward movement on floor bounce
             } else {
-                this.dy += this.gravity; //gravity
+                this.dy += this.gravity + mass(); //gravity
             }
 
             if(this.y + this.radius <= this.radius * 2 - 5) {   //quickly unstick from ceiling
