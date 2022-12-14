@@ -109,9 +109,12 @@ function Circle(x,y,dx,dy,radius,color) {
             if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
                 this.y += 5; 
             }
-            if(this.y + this.radius >= screenHeight) {  //unstick items from floor
+            if(this.y + this.radius >= screenHeight + 5) {  //quickly bring up items from floor
+                this.y -= 10; 
+            } else if(this.y + this.radius >= screenHeight) {  //unstick items from floor
                 this.y -= 0.05; 
             }
+
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
                 this.x -= 0.5; 
             }
