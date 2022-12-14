@@ -110,7 +110,7 @@ function Circle(x,y,dx,dy,radius,color) {
                 this.y += 5; 
             }
             if(this.y + this.radius >= screenHeight) {  //unstick items from floor
-                this.y -= 0.01; 
+                this.y -= 0.05; 
             }
             if(this.x + this.radius >= screenWidth) {   //unstick items from right
                 this.x -= 0.5; 
@@ -214,9 +214,6 @@ setTimeout(function() {
         screenWidth = window.innerWidth;
         canvas.height = screenHeight;
         canvas.width = screenWidth;
-
-        //circArr = [];
-        //multiCircleCreator(randomRange(10,20));
     });
 },50);
 
