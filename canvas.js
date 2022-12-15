@@ -44,6 +44,14 @@ function randomRange(min,max) {
 }
 
 
+function distance(x1,y1,x2,y2) {
+    let xSpace = x2 - x1;
+    let ySpace = y2 - y1;
+
+    return Math.sqrt(Math.pow(xSpace,2) + Math.pow(ySpace,2));
+}
+
+
 /*
 
 //rectangles
@@ -85,18 +93,8 @@ function Circle(x,y,dx,dy,radius,color) {
 
     //takes size into account
     function mass() {
-        if(this.radius > 60) {
-            return 0.6;
-        } else if(this.radius > 50) {
-            return 0.5;
-        } else if(this.radius > 40) {
-            return 0.4;
-        } else if(this.radius > 30) {
-            return 0.3;
-        } else if(this.radius > 20) {
-            return 0.2;
-        } else if(this.radius > 10) {
-            return 0.1;
+        if(this.radius > 0) {
+            return this.radius / 100;
         } else {
             return 0;
         }
@@ -184,8 +182,8 @@ function Circle(x,y,dx,dy,radius,color) {
 }
 
 
-////object creator
-function multiCircleCreator(num) {
+//object creator sets individual attributes
+function creator(num) {
 
     let circle, color, dx, dy, radius, x, y;
     
@@ -197,8 +195,19 @@ function multiCircleCreator(num) {
         radius = randomRange(5,65); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
-
-        circle = new Circle(x,y,dx,dy,radius,color); //circles will have different properties
+        
+        if(i != 0) { //if count is more than one
+            //on creation prevents overlapping of circles
+            for(let j = 0; j < circArr.length; j++) {
+                if(distance(x, y, circArr[j].x, circArr[j].y) - radius * 2 <= 0) {
+                    x = randomRange(radius, screenWidth - radius); //choose another location
+                    y = randomRange(radius, screenHeight - radius); //choose another location
+                    j--;
+                }
+            }
+        }
+        
+        circle = new Circle(x,y,dx,dy,radius,color);
 
         circArr.push(circle); //sends to array
     }
@@ -258,7 +267,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    multiCircleCreator(randomRange(10,20));
+    creator(randomRange(10,20));
     
     animate();
 };
