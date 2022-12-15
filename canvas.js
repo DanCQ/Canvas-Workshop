@@ -71,7 +71,7 @@ c.stroke();
 */
 
 
-//object
+//object blueprint
 function Circle(x,y,dx,dy,radius,color) {
     this.x = x;
     this.y = y;
@@ -103,7 +103,7 @@ function Circle(x,y,dx,dy,radius,color) {
     }
 
     this.draw = ()=> {
-        //circles
+        //circle
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.strokeStyle = "black";
@@ -113,7 +113,6 @@ function Circle(x,y,dx,dy,radius,color) {
     }
 
     this.update = ()=> {
-
             //sets left & right boundaries
             if(this.x + this.radius + this.dx >= screenWidth || this.x + this.dx <= this.radius) {
                 this.dx = -this.dx * this.frictionX; //reduces side movement on side bounce
@@ -167,24 +166,25 @@ function Circle(x,y,dx,dy,radius,color) {
         
 
         //interactivity
-        if(mouse.x - this.x < 100 && mouse.x - this.x > -100 && mouse.y - this.y < 100 && mouse.y - this.y > -100) {
+        if(mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
             
-            this.x += randomRange(-5,5); 
-            this.y += -randomRange(1,10) * 2;
+            this.x += randomRange(-5,5); //random side movement
+            this.y += -randomRange(1,10) * 2; //random upwards movement
 
-            this.dx = -this.dx * invert[randomRange(0,1)] + randomRange(-5,5);
-            this.dy = -this.dy * invert[randomRange(0,1)] + randomRange(-5,5);
+            //random directional speed
+            this.dx = -this.dx + randomRange(2,6) * invert[randomRange(0,1)]; 
+            this.dy = -this.dy + -randomRange(2,10);
         } 
 
-        this.draw();
-    
         this.x += this.dx; 
         this.y += this.dy;
+        
+        this.draw();
     }
 }
 
 
-//select a number to create
+////object creator
 function multiCircleCreator(num) {
 
     let circle, color, dx, dy, radius, x, y;
@@ -210,6 +210,7 @@ function animate() {
     requestAnimationFrame(animate); //loop
     c.clearRect(0,0,screenWidth,screenHeight); //clears screen
 
+    //animates all array items
     for(let i = 0; i < circArr.length; i ++) {
         circArr[i].update(); //updates frame
     }
