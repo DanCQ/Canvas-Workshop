@@ -211,9 +211,9 @@ function animate() {
     c.clearRect(0,0,screenWidth,screenHeight); //clears screen
 
     //animates all array items
-    for(let i = 0; i < circArr.length; i ++) {
-        circArr[i].update(); //updates frame
-    }
+    circArr.forEach(obj => {
+        obj.update(); //updates each object
+    });
 }
 
 
