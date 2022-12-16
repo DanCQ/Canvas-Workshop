@@ -205,7 +205,7 @@ function Circle(x,y,vx,vy,radius,color) {
         
 
         //interactivity
-        if(mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+        if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
             
             this.x += randomRange(-5,5); //random side movement
             this.y += -randomRange(1,10) * 2; //random upwards movement
