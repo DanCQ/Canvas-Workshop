@@ -36,14 +36,7 @@ const colorArray = [
 ];
 
 
-//Returns a random number within a chosen range
-function randomRange(min,max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-//Math.floor() rounds down to the nearest whole number  e.i. 10 = 0 - 9  
-//Math.random() returns a random decimal between 0 - 0.99
-}
-
-
+//checks collision distance between objects
 function distance(x1,y1,x2,y2) {
     let xSpace = x2 - x1;
     let ySpace = y2 - y1;
@@ -52,47 +45,81 @@ function distance(x1,y1,x2,y2) {
 }
 
 
-/*
+//Returns a random number within a chosen range
+function randomRange(min,max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+//Math.floor() rounds down to the nearest whole number  e.i. 10 = 0 - 9  
+//Math.random() returns a random decimal between 0 - 0.99
+}
 
-//rectangles
-c.fillStyle = "rgba(255, 0, 0, 0.6)";
-c.fillRect(150,140,100,100);
-c.fillStyle = "rgba(0, 255, 0, 0.25)";
-c.fillRect(250,240,100,100);
-c.fillStyle = "rgba(0, 0, 255, 0.6)";
-c.fillRect(350,140,100,100);
 
-//lines
-c.beginPath();
-c.strokeStyle = "ivory";
-c.moveTo(100,125);
-c.lineTo(100,300);
-c.lineTo(200,400);
-c.lineTo(400,400);
-c.lineTo(500,300);
-c.lineTo(500,125);
-c.lineTo(400,40);
-c.lineTo(200,40);
-c.lineTo(100,125);
-c.stroke();
+//simulated collision physics 
+function resolveCollision(particle, otherParticle) {
+    const xVelocityDiff = particle.velocity.x - otherParticle.velocity.x;
+    const yVelocityDiff = particle.velocity.y - otherParticle.velocity.y;
 
-*/
+    const xDist = otherParticle.x - particle.x;
+    const yDist = otherParticle.y - particle.y;
+    
+    //measures angle & velocity before equation
+    function rotate(velocity, angle) {
+	    const rotatedVelocities = {
+		    x: velocity.x * Math.cos(angle) - velocity.y * Math.sin(angle),
+		    y: velocity.x * Math.sin(angle) + velocity.y * Math.cos(angle)
+	    };
+        return rotatedVelocities;
+    } 
+    
+    // Prevent accidental overlap of particles
+    if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+
+        // Grab angle between the two colliding particles
+        const angle = -Math.atan2(otherParticle.y - particle.y, otherParticle.x - particle.x);
+
+        // Store mass in var for better readability in collision equation
+        const m1 = particle.mass;
+        const m2 = otherParticle.mass;
+
+        // Velocity before equation
+        const u1 = rotate(particle.velocity, angle);
+        const u2 = rotate(otherParticle.velocity, angle);
+
+        // Velocity after 1d collision equation
+        const v1 = { x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2), y: u1.y };
+        const v2 = { x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2), y: u2.y };
+
+        // Final velocity after rotating axis back to original location
+        const vFinal1 = rotate(v1, -angle);
+        const vFinal2 = rotate(v2, -angle);
+
+        // Swap particle velocities for realistic bounce effect
+        particle.velocity.x = vFinal1.x * particle.collision;
+        particle.velocity.y = vFinal1.y * particle.collision;
+
+        otherParticle.velocity.x = vFinal2.x * otherParticle.collision;
+        otherParticle.velocity.y = vFinal2.y * otherParticle.collision;
+    }
+}
 
 
 //object blueprint
-function Circle(x,y,dx,dy,radius,color) {
+function Circle(x,y,vx,vy,radius,color) {
     this.x = x;
     this.y = y;
-    this.dx = dx;
-    this.dy = dy;
+    this.velocity = {
+        x: vx,
+        y: vy
+    };
     this.color = color;
     this.radius = radius;
-    this.gravity = 0.98 + mass(); 
-    this.frictionY = 0.95 - mass();
-    this.frictionX = 0.82 - mass();
+    this.gravity = 0.98 + size(); 
+    this.frictionY = 0.95 - size();
+    this.frictionX = 0.82 - size();
+    this.collision = 0.97 - size(); //I added to Resolve Collision
+    this.mass = 1 + size(); //needed for Resolve collision
 
     //takes size into account
-    function mass() {
+    function size() {
         if(this.radius > 0) {
             return this.radius / 100;
         } else {
@@ -110,57 +137,71 @@ function Circle(x,y,dx,dy,radius,color) {
         c.fill();
     }
 
-    this.update = ()=> {
-            //sets left & right boundaries
-            if(this.x + this.radius + this.dx >= screenWidth || this.x + this.dx <= this.radius) {
-                this.dx = -this.dx * this.frictionX; //reduces side movement on side bounce
-            }
-            //sets ceiling & floor boundaries
-            if(this.y + this.radius + this.dy >= screenHeight || this.y + this.dy <= this.radius) {
-                this.dy = -this.dy * this.frictionY;  //reduces upward movement on floor bounce
-            } else {
-                this.dy += this.gravity; //gravity
-            }
+    this.update = circArr => {
 
-            if(this.y + this.radius <= this.radius * 2 - 5) {   //rapidly unstick from ceiling
-                this.y += 25;
-                this.dx += randomRange(-2,2);  //adds slight sideways movement 
-            } else if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
-                this.y += 1; 
-            }
-            if(this.y + this.radius >= screenHeight + 5) {  //rapidly bring up items from floor
-                this.y -= 25; 
-                this.dx += randomRange(-2,2);  //adds slight sideways movement 
-            } else if(this.y + this.radius >= screenHeight) {  //prevents from sinking into floor
-                this.y -= 0.05; 
-            }
+        //collision detection
+        for(let k = 0; k < circArr.length; k++) {
 
-            if(this.x + this.radius >= screenWidth + 5) {   //rapidly unstick from right
-                this.x -= 25;
-                this.dx += randomRange(-2,2);  //adds slight sideways movement 
-            } else if(this.x + this.radius >= screenWidth) {   //unstick items from right
-                this.x -= 1; 
-            }
-            if(this.x + this.radius <= (this.radius * 2) - 5) {  //rapidly unstick from left
-                this.x += 25;
-                this.dx += randomRange(-2,2);  //adds slight sideways movement 
-            } else if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
-                this.x += 1; 
-            }
+            if(this === circArr[k]) continue;
+            if(distance(this.x, this.y, circArr[k].x, circArr[k].y) - this.radius - circArr[k].radius < 0) {
 
-            //slowly reduces rolling speed
-            if(this.dx > -10 && this.dx < 0) {
-                this.dx += 0.005;
-            } else if (this.dx < 10 && this.dx > 0) {
-                this.dx -= 0.005;
-            } 
+                if(this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x > 1.6 || 
+                this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x < -1.6) {
+                    resolveCollision(this, circArr[k]);
+                } 
+            }
+        }
+
+        //sets left & right boundaries
+        if(this.x + this.radius + this.velocity.x >= screenWidth || this.x + this.velocity.x <= this.radius) {
+            this.velocity.x = -this.velocity.x * this.frictionX; //reduces side movement on side bounce
+        }
+        //sets ceiling & floor boundaries
+        if(this.y + this.radius + this.velocity.y >= screenHeight || this.y + this.velocity.y <= this.radius) {
+            this.velocity.y = -this.velocity.y * this.frictionY;  //reduces upward movement on floor bounce
+        } else {
+            this.velocity.y += this.gravity; //gravity
+        }
+
+        if(this.y + this.radius <= this.radius * 2 - 5) {   //rapidly unstick from ceiling
+            this.y += 25;
+            this.velocity.x += randomRange(-2,2);  //adds slight sideways movement 
+        } else if(this.y + this.radius <= this.radius * 2) {  //unstick items from ceiling
+            this.y += 1; 
+        }
+        if(this.y + this.radius >= screenHeight + 5) {  //rapidly bring up items from floor
+            this.y -= 25; 
+            this.velocity.x += randomRange(-2,2);  //adds slight sideways movement 
+        } else if(this.y + this.radius >= screenHeight) {  //prevents from sinking into floor
+            this.y -= 0.05; 
+        }
+
+        if(this.x + this.radius >= screenWidth + 5) {   //rapidly unstick from right
+            this.x -= 25;
+            this.velocity.x += randomRange(-2,2);  //adds slight sideways movement 
+        } else if(this.x + this.radius >= screenWidth) {   //unstick items from right
+            this.x -= 1; 
+        }
+        if(this.x + this.radius <= (this.radius * 2) - 5) {  //rapidly unstick from left
+            this.x += 25;
+            this.velocity.x += randomRange(-2,2);  //adds slight sideways movement 
+        } else if(this.x + this.radius <= this.radius * 2) {    //unstick items from left
+            this.x += 1; 
+        }
+
+        //slowly reduces rolling speed
+        if(this.velocity.x > -10 && this.velocity.x < 0) {
+            this.velocity.x += 0.005;
+        } else if (this.velocity.x < 10 && this.velocity.x > 0) {
+            this.velocity.x -= 0.005;
+        } 
 
             //slowly reduces bounce height
-            if(this.dy > -10 && this.dy < 0) {
-                this.dy += 0.005;
-            } else if (this.dy < 10 && this.dy > 0) {
-                this.dy -= 0.005;
-            }
+        if(this.velocity.y > -10 && this.velocity.y < 0) {
+            this.velocity.y += 0.005;
+        } else if (this.velocity.y < 10 && this.velocity.y > 0) {
+            this.velocity.y -= 0.005;
+        }
         
 
         //interactivity
@@ -170,12 +211,12 @@ function Circle(x,y,dx,dy,radius,color) {
             this.y += -randomRange(1,10) * 2; //random upwards movement
 
             //random directional speed
-            this.dx = -this.dx + randomRange(2,6) * invert[randomRange(0,1)]; 
-            this.dy = -this.dy + -randomRange(2,10);
+            this.velocity.x = -this.velocity.x + randomRange(2,6) * invert[randomRange(0,1)]; 
+            this.velocity.y = -this.velocity.y + -randomRange(2,10);
         } 
 
-        this.x += this.dx; 
-        this.y += this.dy;
+        this.x += this.velocity.x; 
+        this.y += this.velocity.y;
         
         this.draw();
     }
@@ -185,29 +226,19 @@ function Circle(x,y,dx,dy,radius,color) {
 //object creator sets individual attributes
 function creator(num) {
 
-    let circle, color, dx, dy, radius, x, y;
+    let circle, color, vx, vy, radius, x, y;
     
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        dx = randomRange(1,25) * invert[randomRange(0,1)]; //random direction x-axis
-        dy = randomRange(1,25) * invert[randomRange(0,1)]; //random direction y-axis
-        radius = randomRange(5,65); //random circle radius
+        vx = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity x-axis
+        vy = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity y-axis
+        radius = randomRange(4,45); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
         
-        if(i != 0) { //if count is more than one
-            //on creation prevents overlapping of circles
-            for(let j = 0; j < circArr.length; j++) {
-                if(distance(x, y, circArr[j].x, circArr[j].y) - radius * 2 <= 0) {
-                    x = randomRange(radius, screenWidth - radius); //choose another location
-                    y = randomRange(radius, screenHeight - radius); //choose another location
-                    j--;
-                }
-            }
-        }
         
-        circle = new Circle(x,y,dx,dy,radius,color);
+        circle = new Circle(x,y,vx,vy,radius,color);
 
         circArr.push(circle); //sends to array
     }
@@ -221,7 +252,7 @@ function animate() {
 
     //animates all array items
     circArr.forEach(obj => {
-        obj.update(); //updates each object
+        obj.update(circArr); //updates each object
     });
 }
 
@@ -267,7 +298,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    creator(randomRange(10,20));
+    creator(randomRange(25,250));
     
     animate();
 };
