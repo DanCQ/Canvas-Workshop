@@ -145,8 +145,8 @@ function Circle(x,y,vx,vy,radius,color) {
             if(this === circArr[k]) continue;
             if(distance(this.x, this.y, circArr[k].x, circArr[k].y) - this.radius - circArr[k].radius < 0) {
 
-                if(this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x > 1.6 || 
-                this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x < -1.6) {
+                if(this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x > 1.8 || 
+                this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x < -1.8) {
                     resolveCollision(this, circArr[k]);
                 } 
             }
