@@ -208,7 +208,7 @@ function Circle(x,y,vx,vy,radius,color) {
         if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
             
             this.x += randomRange(-5,5); //random side movement
-            this.y += -randomRange(1,10) * 2; //random upwards movement
+            this.y += -randomRange(2,12) * 2; //random upwards movement
 
             //random directional speed
             this.velocity.x = -this.velocity.x + randomRange(2,6) * invert[randomRange(0,1)]; 
