@@ -239,7 +239,7 @@ function MyMouse(x,y) {
         x: undefined,
         y: undefined
     };
-    this.radius = 30;
+    this.radius = 25;
     this.collision = 1;
     this.mass = 1;
 
@@ -266,7 +266,7 @@ function creator(num) {
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
         vx = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity x-axis
         vy = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity y-axis
-        radius = randomRange(4,35); //random circle radius
+        radius = randomRange(5,25); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
         
@@ -332,7 +332,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    creator(randomRange(50,100));
+    creator(randomRange(100,200));
     
     animate();
 };
