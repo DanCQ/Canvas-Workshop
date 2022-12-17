@@ -7,12 +7,16 @@ canvas.height = screenHeight;
 canvas.width = screenWidth;
 c = canvas.getContext("2d");
 
-let circArr = [];
+
+let circArr = []; //object array
 let invert = [-1,1]; //reverses directions
-let mouse = {
+let mouse = { //mouse location
     x: undefined,
     y: undefined
 };
+let user; //user interactivity
+let userVx; //user velocity x
+let userVy; //user velocity y
 
 //141 colors. The minimum is 0, the maximum is 140
 const colorArray = [
@@ -42,14 +46,6 @@ function distance(x1,y1,x2,y2) {
     let ySpace = y2 - y1;
 
     return Math.sqrt(Math.pow(xSpace,2) + Math.pow(ySpace,2));
-}
-
-
-//Returns a random number within a chosen range
-function randomRange(min,max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-//Math.floor() rounds down to the nearest whole number  e.i. 10 = 0 - 9  
-//Math.random() returns a random decimal between 0 - 0.99
 }
 
 
@@ -102,6 +98,14 @@ function resolveCollision(particle, otherParticle) {
 }
 
 
+//Returns a random number within a chosen range
+function randomRange(min,max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+//Math.floor() rounds down to the nearest whole number  e.i. 10 = 0 - 9  
+//Math.random() returns a random decimal between 0 - 0.99
+}
+
+
 //object blueprint
 function Circle(x,y,vx,vy,radius,color) {
     this.x = x;
@@ -139,14 +143,16 @@ function Circle(x,y,vx,vy,radius,color) {
 
     this.update = circArr => {
 
-        //collision detection
+        //accurate collision detection
         for(let k = 0; k < circArr.length; k++) {
 
             if(this === circArr[k]) continue;
             if(distance(this.x, this.y, circArr[k].x, circArr[k].y) - this.radius - circArr[k].radius < 0) {
 
+                //activates if combined velocity is above threshold
                 if(this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x > 1.8 || 
                 this.velocity.y + this.velocity.x + circArr[k].velocity.y + circArr[k].velocity.x < -1.8) {
+
                     resolveCollision(this, circArr[k]);
                 } 
             }
@@ -196,7 +202,7 @@ function Circle(x,y,vx,vy,radius,color) {
             this.velocity.x -= 0.005;
         } 
 
-            //slowly reduces bounce height
+        //slowly reduces bounce height
         if(this.velocity.y > -10 && this.velocity.y < 0) {
             this.velocity.y += 0.005;
         } else if (this.velocity.y < 10 && this.velocity.y > 0) {
@@ -204,16 +210,18 @@ function Circle(x,y,vx,vy,radius,color) {
         }
         
 
-        //interactivity
-        if(mouse.x - this.x < 75 && mouse.x - this.x > -75 && mouse.y - this.y < 75 && mouse.y - this.y > -75) {
-            
-            this.x += randomRange(-5,5); //random side movement
-            this.y += -randomRange(2,12) * 2; //random upwards movement
+        //interactivity; accurate click & mouse collision detection
+        for(let m = 0; m < circArr.length; m++) {
 
-            //random directional speed
-            this.velocity.x = -this.velocity.x + randomRange(2,6) * invert[randomRange(0,1)]; 
-            this.velocity.y = -this.velocity.y + -randomRange(2,10);
-        } 
+            if(distance(user.x, user.y, circArr[m].x, circArr[m].y) - user.radius - circArr[m].radius < 0) {
+
+                userVx = (user.x - circArr[m].x) / 1.4;  //user x velocity set at impact
+                 
+                userVy = (user.y - circArr[m].y) / 1.4; //user y velocity set at impact
+                
+                resolveCollision(user, circArr[m]); //collision physics 
+            } 
+        }
 
         this.x += this.velocity.x; 
         this.y += this.velocity.y;
@@ -223,10 +231,35 @@ function Circle(x,y,vx,vy,radius,color) {
 }
 
 
+//mouse movement and click object
+function MyMouse(x,y) {
+    this.x = x;
+    this.y = y;
+    this.velocity = {
+        x: undefined,
+        y: undefined
+    };
+    this.radius = 30;
+    this.collision = 1;
+    this.mass = 1;
+
+    this.update = ()=> {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        this.velocity = {
+            x: userVx,
+            y: userVy
+        };
+    }
+}
+
+
 //object creator sets individual attributes
 function creator(num) {
 
     let circle, color, vx, vy, radius, x, y;
+    
+    user = new MyMouse(mouse.x,mouse.y);
     
     for(let i = 0; i < num; i++) {
         
@@ -237,11 +270,10 @@ function creator(num) {
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
         
-        
         circle = new Circle(x,y,vx,vy,radius,color);
 
         circArr.push(circle); //sends to array
-    }
+    }    
 }
 
 
@@ -249,6 +281,8 @@ function animate() {
 
     requestAnimationFrame(animate); //loop
     c.clearRect(0,0,screenWidth,screenHeight); //clears screen
+
+    user.update(); //mouse|click object
 
     //animates all array items
     circArr.forEach(obj => {
@@ -266,7 +300,7 @@ canvas.addEventListener("click", function(event) {
     setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },100);
+    },100); 
 });
 
 
@@ -291,7 +325,7 @@ setTimeout(function() {
             screenWidth = window.innerWidth;
             canvas.height = screenHeight;
             canvas.width = screenWidth;
-        },50);
+        },75);
     });
 }, 25); 
 
