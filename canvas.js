@@ -332,7 +332,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    creator(randomRange(100,200));
+    creator(randomRange(150,250));
     
     animate();
 };
