@@ -215,9 +215,9 @@ function Circle(x,y,vx,vy,radius,color) {
 
             if(distance(user.x, user.y, circArr[m].x, circArr[m].y) - user.radius - circArr[m].radius < 0) {
 
-                userVx = (user.x - circArr[m].x) / 1.4;  //user x velocity set at impact
+                userVx = (user.x - circArr[m].x);  //user x velocity set at impact
                  
-                userVy = (user.y - circArr[m].y) / 1.4; //user y velocity set at impact
+                userVy = (user.y - circArr[m].y); //user y velocity set at impact
                 
                 resolveCollision(user, circArr[m]); //collision physics 
             } 
