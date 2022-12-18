@@ -7,9 +7,8 @@ canvas.height = screenHeight;
 canvas.width = screenWidth;
 c = canvas.getContext("2d");
 
-
-let circArr = []; //object array
-let invert = [-1,1]; //reverses directions
+const circArr = []; //object array
+const twister = []; //mouse cursor
 let mouse = { //mouse location
     x: undefined,
     y: undefined
@@ -232,25 +231,44 @@ function Circle(x,y,vx,vy,radius,color) {
 
 
 //mouse movement and click object
-function MyMouse(x,y) {
+function MyMouse(x,y,color) {
     this.x = x;
     this.y = y;
-    this.velocity = {
-        x: undefined,
-        y: undefined
-    };
-    this.radius = 25;
+    this.color = color;
     this.collision = 1;
+    this.distance = {
+        x: randomRange(1,25), //horizontal distance from center
+        y: randomRange(1,10)  //vertical distance from center
+    } 
     this.mass = 1;
+    this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
+    this.radius = 25; //radius of mouse object
+    this.width = (Math.random() * 1) + 1; //particle size range between 1-2
+    this.spinVelocity = 0.08;
+    this.velocity = {
+        x: 0.08,
+        y: 0.08
+    };
+    
+    this.draw = ()=> {
+        c.beginPath();
+        c.arc(this.x, this.y, this.width, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.closePath;
+    };
 
     this.update = ()=> {
-        this.x = mouse.x;
-        this.y = mouse.y;
+        this.radians += this.spinVelocity;
+        this.x = mouse.x + Math.cos(this.radians) * this.distance.x; 
+        this.y = mouse.y + Math.sin(this.radians) * this.distance.y;
         this.velocity = {
             x: userVx,
             y: userVy
         };
-    }
+
+        this.draw();
+    };
 }
 
 
@@ -259,13 +277,11 @@ function creator(num) {
 
     let circle, color, vx, vy, radius, x, y;
     
-    user = new MyMouse(mouse.x,mouse.y);
-    
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
-        vx = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity x-axis
-        vy = randomRange(1,25) * invert[randomRange(0,1)]; //random velocity y-axis
+        vx = randomRange(-25,25); //random velocity x-axis
+        vy = randomRange(-25,25); //random velocity y-axis
         radius = randomRange(5,30); //random circle radius
         x = randomRange(radius, screenWidth - radius); //choose location
         y = randomRange(radius, screenHeight - radius); //choose location
@@ -274,6 +290,15 @@ function creator(num) {
 
         circArr.push(circle); //sends to array
     }    
+    
+    for(let i = 0; i < 50; i++) {
+
+        color = colorArray[randomRange( 0, colorArray.length - 1)];
+        
+        user = new MyMouse(undefined,undefined,color);
+
+        twister.push(user);
+    }
 }
 
 
@@ -282,7 +307,10 @@ function animate() {
     requestAnimationFrame(animate); //loop
     c.clearRect(0,0,screenWidth,screenHeight); //clears screen
 
-    user.update(); //mouse|click object
+    twister.forEach(obj => {
+        obj.update();
+    });
+    //user.update(); //mouse|click object
 
     //animates all array items
     circArr.forEach(obj => {
@@ -297,10 +325,10 @@ canvas.addEventListener("click", function(event) {
 
     portfolio.style.visibility == "visible" ? portfolio.style.visibility = "hidden" : portfolio.style.visibility = "visible";
 
-    setTimeout(function() {
+   /*  setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },100); 
+    },100);  */
 });
 
 
@@ -308,10 +336,10 @@ canvas.addEventListener("mousemove", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
 
-    setTimeout(function() {
+   /*  setTimeout(function() {
         mouse.x = undefined;
         mouse.y = undefined;
-    },25);
+    },25); */
 });
 
 
