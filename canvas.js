@@ -249,8 +249,8 @@ function MyMouse(x,y,color) {
     this.width = (Math.random() * 1) + 1; //particle size range between 1-2
     this.spinVelocity = 0.08;
     this.velocity = {
-        x: 0.08,
-        y: 0.08
+        x: undefined,
+        y: undefined
     };
     
     this.draw = ()=> {
