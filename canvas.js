@@ -9,10 +9,13 @@ c = canvas.getContext("2d");
 
 const circArr = []; //object array
 const twister = []; //mouse cursor
+let allow = true; //used for interval
+let off; //used for interval
 let mouse = { //mouse location
     x: undefined,
     y: undefined
 };
+let time = 0; //used for interval
 let user; //user interactivity
 let userVx; //user velocity x
 let userVy; //user velocity y
@@ -322,13 +325,25 @@ function animate() {
 canvas.addEventListener("click", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
+    portfolio.style.visibility = "visible";
+    time = 10000; //10 seconds, resets on click
 
-    portfolio.style.visibility == "visible" ? portfolio.style.visibility = "hidden" : portfolio.style.visibility = "visible";
+    if(allow) {
 
-   /*  setTimeout(function() {
-        mouse.x = undefined;
-        mouse.y = undefined;
-    },100);  */
+        allow = false; //prevents multiple intervals
+
+        off = setInterval(() => {
+            time -= 1000;
+        
+            if(time <= 0) {
+                mouse.x = undefined;
+                mouse.y = undefined;
+                portfolio.style.visibility = "hidden"
+                clearInterval(off);
+                allow = true;
+            }
+        }, 1000);
+    }
 });
 
 
@@ -336,10 +351,23 @@ canvas.addEventListener("mousemove", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
 
-   /*  setTimeout(function() {
-        mouse.x = undefined;
-        mouse.y = undefined;
-    },25); */
+    time = 10000; //10 seconds, resets on click
+
+    if(allow) {
+
+        allow = false; //prevents multiple intervals
+
+        off = setInterval(() => {
+            time -= 1000;
+        
+            if(time <= 0) {
+                mouse.x = undefined;
+                mouse.y = undefined;
+                clearInterval(off);
+                allow = true;
+            }
+        }, 1000);
+    }
 });
 
 
