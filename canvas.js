@@ -138,11 +138,11 @@ function Circle(x,y,vx,vy,radius,color) {
         //circle
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.strokeStyle = "black";
+        c.lineWidth = 0.5;
+        c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
-        c.strokeStyle = "black";
-        c.lineWidth = 0.5
-        c.stroke();
         c.closePath();
     }
 
