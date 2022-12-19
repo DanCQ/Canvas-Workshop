@@ -232,9 +232,15 @@ function Circle(x,y,vx,vy,radius,color) {
         this.y += this.velocity.y;
 
         if(groovy > 4000) {
-            this.gravity = 0 + size(); 
+            this.gravity = 0; 
+            if(groovy > 7000) {
+                this.frictionX = 1;
+                this.frictionY = 1;
+            }
         } else {
             this.gravity = 0.98 + size(); 
+            this.frictionX = 0.82 - size();
+            this.frictionY = 0.95 - size();
         }
 
         
@@ -327,12 +333,15 @@ function creator(num) {
 }
 
 
-function animate() {
+function animate() {   
 
     requestAnimationFrame(animate); //loop  
 
     //visual progression to reward engagement
-    if(groovy > 6000) {
+    if(groovy > 7000) {
+        c.fillStyle = `${colorArray[randomRange(0, colorArray.length - 1)]}`;
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 6000) {
         c.fillStyle = "rgba(0, 0, 0, 0.4)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else if(groovy > 5000) {
