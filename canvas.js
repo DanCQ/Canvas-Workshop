@@ -322,7 +322,7 @@ function animate() {
 
     requestAnimationFrame(animate); //loop  
     if(groovy > 10000) {
-        c.fillStyle = "rgba(0, 0, 0, 0.05)";
+        c.fillStyle = "rgba(0, 0, 0, 0.03)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
@@ -337,8 +337,6 @@ function animate() {
     circArr.forEach(obj => {
         obj.update(circArr); //updates each object
     });
-
-    console.log(groovy);
 }
 
 
@@ -375,7 +373,7 @@ canvas.addEventListener("mousemove", function(event) {
     mouse.y = event.y;
 
     time = 10000; //10 seconds, resets on click
-    groovy += 10;
+    groovy += 20;
     
     if(allow) {
 
