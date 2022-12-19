@@ -330,15 +330,15 @@ function animate() {
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
     }
-
-    //animates twister
-    twister.forEach(obj => {
-        obj.update();
-    });
-
+    
     //animates all array items
     circArr.forEach(obj => {
         obj.update(circArr); //updates each object
+    });
+    
+    //animates twister
+    twister.forEach(obj => {
+        obj.update();
     });
 }
 
