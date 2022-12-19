@@ -109,6 +109,60 @@ function randomRange(min,max) {
 }
 
 
+//mouse movement and click object
+function MyMouse(x,y,color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.collision = 1;
+    this.distance = {
+        x: randomRange(10,50), //horizontal distance from center
+        y: randomRange(10,40)  //vertical distance from center
+    } 
+    this.mass = 1;
+    this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
+    this.radius = 50; //radius of mouse object
+    this.width = (Math.random() * 2.5) + 1; //particle size range between 1-2
+    this.spinVelocity = 0.08;
+    this.velocity = {
+        x: 0,
+        y: 0
+    };
+    this.lastMouse = {
+        x: x,
+        y: y
+    };
+    
+    this.draw = previous => {
+        c.beginPath();
+        c.strokeStyle = this.color;
+        c.lineWidth = this.width;
+        c.moveTo(previous.x, previous.y);
+        c.lineTo(this.x, this.y);
+        c.stroke();
+        c.closePath();
+    };
+
+    this.update = ()=> {
+        let previous = {
+            x: this.x,
+            y: this.y
+        };
+        this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
+        this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
+        this.radians += this.spinVelocity;
+        this.x = this.lastMouse.x + Math.cos(this.radians) * this.distance.x; 
+        this.y = this.lastMouse.y + Math.sin(this.radians) * this.distance.y;
+        this.velocity = {
+            x: userVx,
+            y: userVy
+        };
+
+        this.draw(previous);
+    };
+}
+
+
 //object blueprint
 function Circle(x,y,vx,vy,radius,color) {
     this.x = x;
@@ -138,10 +192,11 @@ function Circle(x,y,vx,vy,radius,color) {
         //circle
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.strokeStyle = "black";
-        c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
+        c.strokeStyle = "black";
+        c.lineWidth = 0.5
+        c.stroke();
         c.closePath();
     }
 
@@ -231,60 +286,6 @@ function Circle(x,y,vx,vy,radius,color) {
         
         this.draw();
     }
-}
-
-
-//mouse movement and click object
-function MyMouse(x,y,color) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.collision = 1;
-    this.distance = {
-        x: randomRange(10,50), //horizontal distance from center
-        y: randomRange(10,40)  //vertical distance from center
-    } 
-    this.mass = 1;
-    this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
-    this.radius = 50; //radius of mouse object
-    this.width = (Math.random() * 2.5) + 1; //particle size range between 1-2
-    this.spinVelocity = 0.08;
-    this.velocity = {
-        x: 0,
-        y: 0
-    };
-    this.lastMouse = {
-        x: x,
-        y: y
-    };
-    
-    this.draw = previous => {
-        c.beginPath();
-        c.strokeStyle = this.color;
-        c.lineWidth = this.width;
-        c.moveTo(previous.x, previous.y);
-        c.lineTo(this.x, this.y);
-        c.stroke();
-        c.closePath();
-    };
-
-    this.update = ()=> {
-        let previous = {
-            x: this.x,
-            y: this.y
-        };
-        this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
-        this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
-        this.radians += this.spinVelocity;
-        this.x = this.lastMouse.x + Math.cos(this.radians) * this.distance.x; 
-        this.y = this.lastMouse.y + Math.sin(this.radians) * this.distance.y;
-        this.velocity = {
-            x: userVx,
-            y: userVy
-        };
-
-        this.draw(previous);
-    };
 }
 
 
