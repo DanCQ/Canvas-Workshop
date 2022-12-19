@@ -295,7 +295,7 @@ function creator(num) {
     
     for(let i = 0; i < num; i++) {
         
-        color = colorArray[randomRange( 0, colorArray.length - 1)]; //random color picker
+        color = colorArray[randomRange(0, colorArray.length - 1)]; //random color picker
         vx = randomRange(-25,25); //random velocity x-axis
         vy = randomRange(-25,25); //random velocity y-axis
         radius = randomRange(5,30); //random circle radius
@@ -306,15 +306,18 @@ function creator(num) {
 
         circArr.push(circle); //sends to array
     }    
-    
-    for(let i = 0; i < 50; i++) {
 
-        color = colorArray[randomRange( 0, colorArray.length - 1)];
+    setTimeout(function() {
+
+        for(let i = 0; i < 50; i++) {
+
+            color = colorArray[randomRange(0, colorArray.length - 1)];
         
-        user = new MyMouse(screenWidth/2, screenHeight/2, color);
+            user = new MyMouse(screenWidth/2, screenHeight/2, color);
 
-        twister.push(user);
-    }
+            twister.push(user);
+        }
+    }, 500)
 }
 
 
