@@ -15,6 +15,7 @@ let mouse = { //mouse location
     x: screenWidth / 2,
     y: screenHeight / 2
 };
+let groovy = 0;
 let time = 0; //used for interval
 let user; //user interactivity
 let userVx; //user velocity x
@@ -137,11 +138,11 @@ function Circle(x,y,vx,vy,radius,color) {
         //circle
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.strokeStyle = "rgb(0,0,0)";
+        c.strokeStyle = "black";
         c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
-       
+        c.closePath();
     }
 
     this.update = circArr => {
@@ -212,7 +213,6 @@ function Circle(x,y,vx,vy,radius,color) {
             this.velocity.y -= 0.005;
         }
         
-
         //interactivity; accurate click & mouse collision detection
         for(let m = 0; m < circArr.length; m++) {
 
@@ -307,26 +307,26 @@ function creator(num) {
         circArr.push(circle); //sends to array
     }    
 
-    setTimeout(function() {
+    for(let i = 0; i < 50; i++) {
 
-        for(let i = 0; i < 50; i++) {
-
-            color = colorArray[randomRange(0, colorArray.length - 1)];
+        color = colorArray[randomRange(0, colorArray.length - 1)];
         
-            user = new MyMouse(screenWidth/2, screenHeight/2, color);
+        user = new MyMouse(screenWidth/2, screenHeight/2, color);
 
-            twister.push(user);
-        }
-    }, 500)
+        twister.push(user);
+    }
 }
 
 
 function animate() {
 
-    requestAnimationFrame(animate); //loop
-    c.clearRect(0,0,screenWidth,screenHeight); //clears screen
-    //c.fillStyle = "rgba(0, 0, 0, 0.05)";
-    //c.fillRect(0,0,screenWidth,screenHeight);
+    requestAnimationFrame(animate); //loop  
+    if(groovy > 10000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.05)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else {
+        c.clearRect(0,0,screenWidth,screenHeight); //clears screen
+    }
 
     //animates twister
     twister.forEach(obj => {
@@ -337,6 +337,8 @@ function animate() {
     circArr.forEach(obj => {
         obj.update(circArr); //updates each object
     });
+
+    console.log(groovy);
 }
 
 
@@ -344,8 +346,10 @@ canvas.addEventListener("click", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
     portfolio.style.visibility = "visible";
-    time = 10000; //10 seconds, resets on click
 
+    time = 10000; //10 seconds, resets on click
+    groovy += 100;
+    
     if(allow) {
 
         allow = false; //prevents multiple intervals
@@ -354,7 +358,10 @@ canvas.addEventListener("click", function(event) {
             time -= 1000;
         
             if(time <= 0) {
+                mouse.x = screenWidth / 2;
+                mouse.y = screenHeight /2;
                 portfolio.style.visibility = "hidden";
+                groovy = 0;
                 clearInterval(off);
                 allow = true;
             }
@@ -366,6 +373,27 @@ canvas.addEventListener("click", function(event) {
 canvas.addEventListener("mousemove", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
+
+    time = 10000; //10 seconds, resets on click
+    groovy += 10;
+    
+    if(allow) {
+
+        allow = false; //prevents multiple intervals
+
+        off = setInterval(() => {
+            time -= 1000;
+        
+            if(time <= 0) {
+                mouse.x = screenWidth / 2;
+                mouse.y = screenHeight /2;
+                portfolio.style.visibility = "hidden";
+                groovy = 0;
+                clearInterval(off);
+                allow = true;
+            }
+        }, 1000);
+    }
 });
 
 
@@ -379,7 +407,9 @@ setTimeout(function() {
             screenWidth = window.innerWidth;
             canvas.height = screenHeight;
             canvas.width = screenWidth;
-        },75);
+            mouse.x = screenWidth / 2;
+            mouse.y = screenHeight /2;
+        },100);
     });
 }, 25); 
 
