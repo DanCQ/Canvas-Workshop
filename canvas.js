@@ -350,8 +350,6 @@ canvas.addEventListener("click", function(event) {
             time -= 1000;
         
             if(time <= 0) {
-                mouse.x = undefined;
-                mouse.y = undefined;
                 portfolio.style.visibility = "hidden";
                 clearInterval(off);
                 allow = true;
@@ -375,8 +373,6 @@ canvas.addEventListener("mousemove", function(event) {
             time -= 1000;
         
             if(time <= 0) {
-                mouse.x = undefined;
-                mouse.y = undefined;
                 portfolio.style.visibility = "hidden";
                 clearInterval(off);
                 allow = true;
