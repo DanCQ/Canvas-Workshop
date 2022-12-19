@@ -362,23 +362,6 @@ canvas.addEventListener("click", function(event) {
 canvas.addEventListener("mousemove", function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
-
-    time = 10000; //10 seconds, resets on click
-
-    if(allow) {
-
-        allow = false; //prevents multiple intervals
-
-        off = setInterval(() => {
-            time -= 1000;
-        
-            if(time <= 0) {
-                portfolio.style.visibility = "hidden";
-                clearInterval(off);
-                allow = true;
-            }
-        }, 1000);
-    }
 });
 
 
