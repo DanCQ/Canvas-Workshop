@@ -12,8 +12,8 @@ const twister = []; //mouse cursor
 let allow = true; //used for interval
 let off; //used for interval
 let mouse = { //mouse location
-    x: undefined,
-    y: undefined
+    x: screenWidth / 2,
+    y: screenHeight / 2
 };
 let time = 0; //used for interval
 let user; //user interactivity
@@ -240,37 +240,49 @@ function MyMouse(x,y,color) {
     this.color = color;
     this.collision = 1;
     this.distance = {
-        x: randomRange(1,25), //horizontal distance from center
-        y: randomRange(1,10)  //vertical distance from center
+        x: randomRange(10,50), //horizontal distance from center
+        y: randomRange(10,40)  //vertical distance from center
     } 
     this.mass = 1;
     this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
-    this.radius = 25; //radius of mouse object
-    this.width = (Math.random() * 1) + 1; //particle size range between 1-2
+    this.radius = 50; //radius of mouse object
+    this.width = (Math.random() * 2.5) + 1; //particle size range between 1-2
     this.spinVelocity = 0.08;
     this.velocity = {
-        x: undefined,
-        y: undefined
+        x: 0,
+        y: 0
+    };
+    this.lastMouse = {
+        x: x,
+        y: y
     };
     
-    this.draw = ()=> {
+    this.draw = previous => {
         c.beginPath();
-        c.arc(this.x, this.y, this.width, 0, Math.PI * 2, false);
-        c.fillStyle = this.color;
-        c.fill();
-        c.closePath;
+        c.strokeStyle = this.color;
+        c.lineWidth = this.width;
+        c.moveTo(previous.x, previous.y);
+        c.lineTo(this.x, this.y);
+        c.stroke();
+        c.closePath();
     };
 
     this.update = ()=> {
+        let previous = {
+            x: this.x,
+            y: this.y
+        };
+        this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
+        this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
         this.radians += this.spinVelocity;
-        this.x = mouse.x + Math.cos(this.radians) * this.distance.x; 
-        this.y = mouse.y + Math.sin(this.radians) * this.distance.y;
+        this.x = this.lastMouse.x + Math.cos(this.radians) * this.distance.x; 
+        this.y = this.lastMouse.y + Math.sin(this.radians) * this.distance.y;
         this.velocity = {
             x: userVx,
             y: userVy
         };
 
-        this.draw();
+        this.draw(previous);
     };
 }
 
@@ -298,7 +310,7 @@ function creator(num) {
 
         color = colorArray[randomRange( 0, colorArray.length - 1)];
         
-        user = new MyMouse(undefined,undefined,color);
+        user = new MyMouse(screenWidth/2, screenHeight/2, color);
 
         twister.push(user);
     }
@@ -309,11 +321,13 @@ function animate() {
 
     requestAnimationFrame(animate); //loop
     c.clearRect(0,0,screenWidth,screenHeight); //clears screen
+    //c.fillStyle = "rgba(0, 0, 0, 0.05)";
+    //c.fillRect(0,0,screenWidth,screenHeight);
 
+    //animates twister
     twister.forEach(obj => {
         obj.update();
     });
-    //user.update(); //mouse|click object
 
     //animates all array items
     circArr.forEach(obj => {
