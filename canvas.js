@@ -139,7 +139,7 @@ function Circle(x,y,vx,vy,radius,color) {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.strokeStyle = "black";
-        c.lineWidth = 0.5;
+        c.lineWidth = 0.6;
         c.stroke();
         c.fillStyle = `${this.color}`;
         c.fill();
@@ -323,7 +323,7 @@ function animate() {
 
     requestAnimationFrame(animate); //loop  
     if(groovy > 1000) {
-        c.fillStyle = "rgba(0, 0, 0, 0.03)";
+        c.fillStyle = "rgba(0, 0, 0, 0.029)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
@@ -415,7 +415,7 @@ setTimeout(function() {
 
 window.onload = function() {
 
-    creator(randomRange(50,125));
+    creator(randomRange(100,175));
     
     animate();
 };
