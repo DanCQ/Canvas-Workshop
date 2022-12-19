@@ -293,6 +293,15 @@ function creator(num) {
 
     let circle, color, vx, vy, radius, x, y;
     
+    for(let i = 0; i < 50; i++) {
+
+        color = colorArray[randomRange(0, colorArray.length - 1)];
+        
+        user = new MyMouse(screenWidth/2, screenHeight/2, color);
+
+        twister.push(user);
+    }
+    
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange(0, colorArray.length - 1)]; //random color picker
@@ -307,14 +316,7 @@ function creator(num) {
         circArr.push(circle); //sends to array
     }    
 
-    for(let i = 0; i < 50; i++) {
 
-        color = colorArray[randomRange(0, colorArray.length - 1)];
-        
-        user = new MyMouse(screenWidth/2, screenHeight/2, color);
-
-        twister.push(user);
-    }
 }
 
 
@@ -322,7 +324,7 @@ function animate() {
 
     requestAnimationFrame(animate); //loop  
     if(groovy > 10000) {
-        c.fillStyle = "rgba(0, 0, 0, 0.03)";
+        c.fillStyle = "rgba(0, 0, 0, 0.04)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
@@ -346,7 +348,7 @@ canvas.addEventListener("click", function(event) {
     portfolio.style.visibility = "visible";
 
     time = 10000; //10 seconds, resets on click
-    groovy += 100;
+    groovy += 150;
     
     if(allow) {
 
