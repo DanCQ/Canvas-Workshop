@@ -133,6 +133,7 @@ function Circle(x,y,vx,vy,radius,color) {
             return 0;
         }
     }
+       
 
     this.draw = ()=> {
         //circle
@@ -229,6 +230,13 @@ function Circle(x,y,vx,vy,radius,color) {
 
         this.x += this.velocity.x; 
         this.y += this.velocity.y;
+
+        if(groovy > 4000) {
+            this.gravity = 0 + size(); 
+        } else {
+            this.gravity = 0.98 + size(); 
+        }
+
         
         this.draw();
     }
@@ -322,13 +330,30 @@ function creator(num) {
 function animate() {
 
     requestAnimationFrame(animate); //loop  
-    if(groovy > 1000) {
+
+    //visual progression to reward engagement
+    if(groovy > 6000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.4)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 5000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.05)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 4000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.005)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 3000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.009)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 2000) {
         c.fillStyle = "rgba(0, 0, 0, 0.029)";
+        c.fillRect(0,0,screenWidth,screenHeight);
+    } else if(groovy > 1000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.05)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
     }
-    
+
     //animates all array items
     circArr.forEach(obj => {
         obj.update(circArr); //updates each object
@@ -355,6 +380,10 @@ canvas.addEventListener("click", function(event) {
 
         off = setInterval(() => {
             time -= 1000;
+
+            if(groovy > 1000) {
+                groovy -= 25;
+            }
         
             if(time <= 0) {
                 mouse.x = screenWidth / 2;
@@ -382,6 +411,10 @@ canvas.addEventListener("mousemove", function(event) {
 
         off = setInterval(() => {
             time -= 1000;
+
+            if(groovy > 1000) {
+                groovy -= 25;
+            }
         
             if(time <= 0) {
                 mouse.x = screenWidth / 2;
