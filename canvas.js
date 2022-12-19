@@ -109,60 +109,6 @@ function randomRange(min,max) {
 }
 
 
-//mouse movement and click object
-function MyMouse(x,y,color) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.collision = 1;
-    this.distance = {
-        x: randomRange(10,50), //horizontal distance from center
-        y: randomRange(10,40)  //vertical distance from center
-    } 
-    this.mass = 1;
-    this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
-    this.radius = 50; //radius of mouse object
-    this.width = (Math.random() * 2.5) + 1; //particle size range between 1-2
-    this.spinVelocity = 0.08;
-    this.velocity = {
-        x: 0,
-        y: 0
-    };
-    this.lastMouse = {
-        x: x,
-        y: y
-    };
-    
-    this.draw = previous => {
-        c.beginPath();
-        c.strokeStyle = this.color;
-        c.lineWidth = this.width;
-        c.moveTo(previous.x, previous.y);
-        c.lineTo(this.x, this.y);
-        c.stroke();
-        c.closePath();
-    };
-
-    this.update = ()=> {
-        let previous = {
-            x: this.x,
-            y: this.y
-        };
-        this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
-        this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
-        this.radians += this.spinVelocity;
-        this.x = this.lastMouse.x + Math.cos(this.radians) * this.distance.x; 
-        this.y = this.lastMouse.y + Math.sin(this.radians) * this.distance.y;
-        this.velocity = {
-            x: userVx,
-            y: userVy
-        };
-
-        this.draw(previous);
-    };
-}
-
-
 //object blueprint
 function Circle(x,y,vx,vy,radius,color) {
     this.x = x;
@@ -289,20 +235,65 @@ function Circle(x,y,vx,vy,radius,color) {
 }
 
 
+//mouse movement and click object
+function MyMouse(x,y,color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.collision = 1;
+    this.distance = {
+        x: randomRange(10,50), //horizontal distance from center
+        y: randomRange(10,40)  //vertical distance from center
+    } 
+    this.mass = 1;
+    this.radians = Math.random() * Math.PI * 2; //random location within a circular radius
+    this.radius = 50; //radius of mouse object
+    this.width = (Math.random() * 2.5) + 1; //particle size range between 1-2
+    this.spinVelocity = 0.08;
+    this.velocity = {
+        x: 0,
+        y: 0
+    };
+    this.lastMouse = {
+        x: x,
+        y: y
+    };
+    
+    this.draw = previous => {
+        c.beginPath();
+        c.strokeStyle = this.color;
+        c.lineWidth = this.width;
+        c.moveTo(previous.x, previous.y);
+        c.lineTo(this.x, this.y);
+        c.stroke();
+        c.closePath();
+    };
+
+    this.update = ()=> {
+        let previous = {
+            x: this.x,
+            y: this.y
+        };
+        this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
+        this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
+        this.radians += this.spinVelocity;
+        this.x = this.lastMouse.x + Math.cos(this.radians) * this.distance.x; 
+        this.y = this.lastMouse.y + Math.sin(this.radians) * this.distance.y;
+        this.velocity = {
+            x: userVx,
+            y: userVy
+        };
+
+        this.draw(previous);
+    };
+}
+
+
 //object creator sets individual attributes
 function creator(num) {
 
     let circle, color, vx, vy, radius, x, y;
-    
-    for(let i = 0; i < 50; i++) {
-
-        color = colorArray[randomRange(0, colorArray.length - 1)];
         
-        user = new MyMouse(screenWidth/2, screenHeight/2, color);
-
-        twister.push(user);
-    }
-    
     for(let i = 0; i < num; i++) {
         
         color = colorArray[randomRange(0, colorArray.length - 1)]; //random color picker
@@ -316,16 +307,23 @@ function creator(num) {
 
         circArr.push(circle); //sends to array
     }    
+    
+    for(let i = 0; i < 50; i++) {
 
+        color = colorArray[randomRange(0, colorArray.length - 1)];
+        
+        user = new MyMouse(screenWidth/2, screenHeight/2, color);
 
+        twister.push(user);
+    }
 }
 
 
 function animate() {
 
     requestAnimationFrame(animate); //loop  
-    if(groovy > 10000) {
-        c.fillStyle = "rgba(0, 0, 0, 0.04)";
+    if(groovy > 1000) {
+        c.fillStyle = "rgba(0, 0, 0, 0.03)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else {
         c.clearRect(0,0,screenWidth,screenHeight); //clears screen
@@ -349,7 +347,7 @@ canvas.addEventListener("click", function(event) {
     portfolio.style.visibility = "visible";
 
     time = 10000; //10 seconds, resets on click
-    groovy += 150;
+    groovy += 50;
     
     if(allow) {
 
@@ -376,7 +374,7 @@ canvas.addEventListener("mousemove", function(event) {
     mouse.y = event.y;
 
     time = 10000; //10 seconds, resets on click
-    groovy += 20;
+    groovy += 1;
     
     if(allow) {
 
