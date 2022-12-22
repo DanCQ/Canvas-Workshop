@@ -348,7 +348,7 @@ function animate() {
         c.fillStyle = "rgba(0, 0, 0, 0.05)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else if(groovy > 4000) {
-        c.fillStyle = "rgba(0, 0, 0, 0.005)";
+        c.fillStyle = "rgba(0, 0, 0, 0.001)";
         c.fillRect(0,0,screenWidth,screenHeight);
     } else if(groovy > 3000) {
         c.fillStyle = "rgba(0, 0, 0, 0.009)";
