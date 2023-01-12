@@ -444,7 +444,7 @@ canvas.addEventListener("touchmove", function(event) {
     mouse.y = event.touches[0].clientY;
     
     time = 10000; //10 seconds, resets on click
-    groovy += 50;
+    groovy += 0.5;
         
     if(allow) {
     
