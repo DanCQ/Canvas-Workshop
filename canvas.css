@@ -1,5 +1,6 @@
 body {
     background-color: black;
+    cursor: none;
     display:flex;
         align-items: center;
         justify-content: center;
@@ -26,6 +27,7 @@ canvas {
 
 .portfolio a {
     color:oldlace;
+    cursor: pointer;
     opacity:0.3;
     text-decoration: none;
 }
