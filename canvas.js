@@ -438,6 +438,38 @@ canvas.addEventListener("mousemove", function(event) {
 });
 
 
+canvas.addEventListener("touchmove", function(event) {
+    //touch swipe controls
+    mouse.x = event.touches[0].clientX;
+    mouse.y = event.touches[0].clientY;
+    
+    time = 10000; //10 seconds, resets on click
+    groovy += 50;
+        
+    if(allow) {
+    
+        allow = false; //prevents multiple intervals
+    
+        off = setInterval(() => {
+            time -= 1000;
+    
+            if(groovy > 1000) {
+                groovy -= 25;
+            }
+            
+            if(time <= 0) {
+                mouse.x = screenWidth / 2;
+                mouse.y = screenHeight /2;
+                portfolio.style.visibility = "hidden";
+                groovy = 0;
+                clearInterval(off);
+                allow = true;
+            }
+        }, 1000);
+    }
+});
+
+
 //prevents infite loop when loading page on mobile
 setTimeout(function() {
     window.addEventListener("resize", function() {
