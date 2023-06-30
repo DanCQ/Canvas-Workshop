@@ -7,6 +7,7 @@ A test site for HTML5 Canvas animations and simulated physics.
 Interact with the cursor to build on the visuals. 
 
 Warning: flashing colors.
+
 Refresh to get different colors, sizes, and numbers.
 
 The circles respond to proximity clicks on the screen, and mouse movements with random direction and speed changes.
