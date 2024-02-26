@@ -4,7 +4,7 @@ A test site for HTML5 Canvas animations and simulated physics.
 
 <a href="https://canvas-workshop.pages.dev/">Canvas Workshop</a>
 
-Interact with the cursor to build on the visuals. 
+Interact with the cursor, or keep clicking, to see a culmination of visuals effects. 
 
 Warning: flashing colors.
 
